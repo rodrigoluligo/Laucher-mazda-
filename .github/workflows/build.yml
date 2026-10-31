@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - "launcher.zip"
+      - "launcher-v4.zip"
       - ".github/workflows/build.yml"
 jobs:
   build:
@@ -18,12 +18,12 @@ jobs:
         run: |
           set +o pipefail
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
-          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-34" "build-tools;34.0.0" > /dev/null || true
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-33" "build-tools;33.0.2" > /dev/null || true
       - name: Descomprimir proyecto
-        run:  unzip -q "launcher (2).zip" -d proj
+        run: unzip -q launcher-v4.zip -d proj
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: "8.9"
+          gradle-version: "7.6.4"
       - name: Compilar
         working-directory: proj
         run: gradle assembleDebug --no-daemon
